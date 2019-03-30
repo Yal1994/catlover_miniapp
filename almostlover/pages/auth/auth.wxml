@@ -1,0 +1,12 @@
+<view class='UCenter-bg' style="background-image: url('/images/bg_me.jpg');">
+  <image src='' class='png' mode='widthFix'></image>
+  <view class='text-xl'>来了? 老弟!
+    <text class='text-df'></text>
+  </view>
+  <view class='margin-top-sm'>
+    <text>By:喵秃</text>
+  </view>
+</view>
+<view class='padding-xl'>
+  <button class='cu-btn  bg-green shadow lg block' open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">登录吸猫</button>
+</view>

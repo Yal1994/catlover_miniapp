@@ -1,0 +1,64 @@
+<view class='cu-custom'>
+  <view class="cu-bar fixed bg-shadeTop" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+
+    </navigator>
+    <view class='content' style='top:{{StatusBar}}px;'>吸猫场所</view>
+  </view>
+</view>
+<swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+  <swiper-item wx:for="{{4}}" wx:key>
+    <image src="{{url}}/img/bgim-{{index}}.jpg" bindtap="showModal" data-target="Image" data-url="{{url}}/img/bgim-{{index}}.jpg" mode='aspectFill'></image>
+  </swiper-item>
+</swiper>
+<!--图片组件-->
+<view class="cu-modal {{modalName=='Image'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="bg-img" style="background-image: url('{{detailPicUrl}}');height:200px;">
+      <view class="cu-bar justify-end text-white">
+        <view class='action' bindtap='hideModal'>
+          <text class='icon-close '></text>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white">
+      <view class='action margin-0 flex-sub  solid-left' bindtap='hideModal'>吸完了</view>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="cu-bar bg-white margin-top solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-orange'></text> 通知
+  </view>
+</view> -->
+<scroll-view scroll-x class="bg-white nav">
+  <view class='flex text-center'>
+    <view class="cu-item flex-sub {{0==TabCur?'text-orange cur':''}}" bindtap='tabSelect' data-id="0">
+      我的消息
+    </view>
+
+  </view>
+</scroll-view>
+
+
+<view wx:if="{{0==TabCur}}" >
+<view wx:for="{{roomList}}" wx:for-item="room" wx:key bindtap='chat' data-idx='{{index}}' >
+  <view class="cu-list menu menu-avatar" >
+    <!--fu wu qi-->
+    <view class="cu-item">
+      <view class="cu-avatar round lg" bindtap='userHome' data-webId='{{room.reciver.webId}}' style="background-image:url({{room.reciver.avatarUrl}});"></view>
+      <view class='content'>
+        <view class='text-grey'>{{room.reciver.nickName}}</view>
+        <view class='text-gray text-sm'>
+          {{room.unreadMessage[0].content}}{{room.hasNew}}</view>
+      </view>
+      <view class='action'>
+        <view class='text-grey text-xs'>{{room.unreadMessage[0].simpleTime}}</view>
+        <view class="cu-tag round bg-red sm" wx:if="{{room.unreadMessage.length>0}}">{{room.unreadMessage.length}}</view>
+      </view>
+    </view>
+  
+  </view>
+ </view>
+</view>

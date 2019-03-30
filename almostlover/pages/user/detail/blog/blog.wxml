@@ -1,0 +1,91 @@
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-gradual-pink" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+      <text class='icon-back'></text> 返回
+    </navigator>
+  </view>
+</view>
+
+
+
+<view class="cu-bar bg-white solid-bottom {{isCard?'margin-top':''}}">
+  <view class='action'>
+    <text class='icon-titles text-orange '></text> {{targetInfo.nickName}}的喵文
+  </view>
+  <view class='action'>
+    <switch class='sm' checked='{{isCard}}' bindchange='isCard'></switch>
+  </view>
+</view>
+<view class="cu-card dynamic {{isCard?'no-card':''}}">
+
+  <!-- 服务器取猫片 -->
+  <view wx:for="{{blogsList}}" wx:key class="cu-item shadow" >
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item" >       
+        <navigator class="cu-avatar round lg" url="/pages/user/user?webId={{item.publisher.webId}}" style="background-image:url('{{item.publisher.avatarUrl}}');"></navigator>
+        <view class='content flex-sub  justify-end' >
+          <view class='action' wx:if="{{userInfo.webId == targetInfo.webId}}" >
+            <button class="cu-btn lines-red round sm fr" 
+              bindtap="showModal" data-target="delComfirm" data-id='{{item.id}}' data-idx="{{index}}">删除</button>
+          </view> 
+          <view bindtap='detail' data-idx='{{index}}'>{{item.publisher.nickName}}</view>                 
+          <view class='text-gray text-sm flex justify-between' bindtap='detail' data-idx='{{index}}'>
+            {{item.publishTime}}
+          </view>          
+        </view>
+      </view>
+    </view>
+    <view class='text-content' bindtap='detail' data-idx='{{index}}'>
+      {{item.content}}
+    </view>
+    <view class="grid col-{{item.attachments.length > 3 ? 3 : item.attachments.length}} {{isCard ? 'grid-square':'co1-1'}}  flex-sub padding-lr" >
+      <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{url}}{{picItem.url}});"
+       wx:for="{{isCard?item.attachments:[item.attachments[0]]}}" wx:for-item='picItem'  wx:for-index='picIdx' wx:key 
+       bindtap='previewImage' data-blogIdx='{{index}}' data-picIdx='{{picIdx}}' wx:if="{{item.attachments[0].type == '1' }}" >
+      </view>
+
+      <video wx:if="{{item.attachments[0].type == '2' }}" class="padding-xs bg-img"  src='{{url}}{{item.attachments[0].url}}'>        
+      </video>
+      
+    </view>
+    <view class='text-gray text-sm text-right padding'>
+      <text class="icon-favorfill" bindtap='favor' data-id='{{item.id}}' data-idx='{{index}}'></text> {{item.views}}
+      <text class="icon-appreciatefill {{item.isStar ? 'text-red' : ''}}"  
+        bindtap='star' data-id='{{item.id}}' data-idx='{{index}}'></text> {{item.stars}}
+      <text class="icon-messagefill" bindtap='detail' data-idx='{{index}}'></text> {{item.comments}}
+    </view>
+
+
+  </view>
+</view>
+
+
+<view class="padding flex flex-direction">
+  <button plain='true' bindtap='loadMore' data-curpage='{{curPage}}' class='cu-btn bg-blue lg' hover-class="cu-load bg-grey loading">点击加载更多...</button>
+</view>
+<view class="bottomlayer"> </view>
+
+<!-- 删除对话框组件-->
+<view wx:if="{{modalName == 'delComfirm'}}">
+<view class="cu-modal {{modalName=='delComfirm'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class='content'>删除</view>
+      <view class='action' bindtap='hideModal'>
+        <text class='icon-close text-red'></text>
+      </view>
+    </view>
+    <view class='padding-xl'>    
+      确定删除?    
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class='action'>
+        <button class='cu-btn line-green text-green' bindtap='hideModal'>取消</button>
+        <button class='cu-btn bg-green margin-left' bindtap='hideModal' data-target="{{modalName}}">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+</view>
+
+

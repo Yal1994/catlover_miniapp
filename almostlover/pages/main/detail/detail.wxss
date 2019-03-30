@@ -1,0 +1,12 @@
+/* pages/detail/detail.wxss */
+
+.text-wrap {
+ display: -webkit-box;
+ word-break: break-all;
+ text-overflow: ellipsis;
+ font-size: 28rpx;
+ overflow: hidden;
+ -webkit-box-orient: vertical;
+ -webkit-line-clamp:100;
+ max-height: 30em
+}

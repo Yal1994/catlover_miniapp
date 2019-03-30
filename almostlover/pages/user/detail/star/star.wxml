@@ -1,0 +1,61 @@
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-gradual-pink" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+      <text class='icon-back'></text> 返回
+    </navigator>
+  </view>
+</view>
+
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class='action'>
+    <text class='icon-title text-orange '></text> {{nickName}}的{{isStar ? "关注" : "粉丝"}}
+  </view>
+</view>
+<view class="cu-list menu menu-avatar" wx:for="{{userList}}" wx:key>  
+
+
+  <!-- fuwuqi-->
+  <view class="cu-item">
+    <navigator class="cu-avatar radius lg" url="/pages/user/user?webId={{item.webId}}" style="background-image:url({{item.avatarUrl}});">
+    </navigator>
+    <view class='content'>
+      <view class='text-grey'>{{item.nickName}}
+        <view class="cu-tag round bg-orange sm" wx:if="{{item.isVip}}">SVIP</view>
+      </view>
+      <!-- <view class='text-gray text-sm'>
+        <text class='icon-redpacket_fill text-red'></text> 收到红包</view> -->
+    </view>
+    <view class='action'>
+      <view class='action' wx:if="{{userInfo.webId == targetId  && isStar}}" >
+        <button class="cu-btn lines-orange round sm" 
+            bindtap='showModal'  data-target="delComfirm" data-id='{{item.webId}}' data-idx="{{index}}">已关注</button>
+      </view>
+      <!-- <view class="icon-notice{{item.openChat=='1'?'':'_forbid_fill'}} text-gray"></view> -->
+    </view>
+  </view> 
+</view>
+
+
+<!-- 取消关注对话组件-->
+<view wx:if="{{modalName == 'delComfirm'}}">
+<view class="cu-modal {{modalName=='delComfirm'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class='content'>取消关注</view>
+      <view class='action' bindtap='hideModal'>
+        <text class='icon-close text-red'></text>
+      </view>
+    </view>
+    <view class='padding-xl'>    
+      确定取消关注?    
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class='action'>
+        <button class='cu-btn line-green text-green' bindtap='hideModal'>取消</button>
+        <button class='cu-btn bg-green margin-left' bindtap='hideModal' data-target="{{modalName}}">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+</view>

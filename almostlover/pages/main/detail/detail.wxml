@@ -1,0 +1,139 @@
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-gradual-pink" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+      <text class='icon-back'></text> 返回
+    </navigator>
+  </view>
+</view>
+
+<!-- <view class="cu-card dynamic {{isCard?'no-card':''}}">
+  <view wx:for="3" wx:key class="cu-item shadow">
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url();"></view>
+        <view class='content flex-sub'>
+          <view>晓晓萌</view>
+          <view class='text-gray text-sm flex justify-between'>
+            2018年12月3日
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='text-content'>
+      你们的铲屎官是不是经常突然对手机傻笑？我家铲屎官常常坐沙发上笑的发抖！（暗中观察.jpg）
+    </view>
+    <view class="grid {{isCard?'col-3 grid-square':'col-1'}} flex-sub padding-lr">
+      <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url();" wx:for="{{isCard?9:1}}" wx:key
+      bindtap="showModal" data-target="Image" data-url="">
+      </view>
+    </view>
+    <view class='text-gray text-sm text-right padding'>
+      <text class="icon-favorfill"></text> 10
+      <text class="icon-appreciatefill"></text> 20
+      <text class="icon-messagefill"></text> 30
+    </view>
+    <view class="cu-list menu menu-avatar comment solids-top">
+      <view class="cu-item" wx:for="{{2}}" wx:key>
+        <view class="cu-avatar round" style="background-image:url();"></view>
+        <view class='content'>
+          <view class='text-grey'>猪皮蛋</view>
+          <view class='text-gray text-content text-df' bindtap='comment' data-commentid='{{commentItem.id}}' data-type='{{comment}}'>
+            我家铲屎官不舔毛，还抠脚！
+          </view>
+          <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{index==1}}">
+            <view class="flex {{index!=0?'margin-top-sm':'' }}" wx:for="{{2}}" wx:key>
+              <view>我：</view>
+              <view class='flex-sub'>我家的铲屎官也不舔毛！</view>
+            </view>
+          </view>
+          <view class='margin-top-sm flex justify-between'>
+            <view class='text-gray text-df'>2018年12月4日</view>
+            <view>
+              <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
+              <text class="icon-messagefill text-gray margin-left-sm"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> -->
+
+
+<!-- 服务器取数据-->
+<view class="cu-card dynamic {{isCard?'no-card':''}}" >
+  <view wx:for="1" wx:key class="cu-item shadow">
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url({{blog.publisher.avatarUrl}});"></view>
+        <view class='content flex-sub'>
+          <view>{{blog.publisher.nickName}}</view>
+          <view class='text-gray text-sm flex justify-between'>
+             {{blog.publishTime}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='text-wrap text-content' style='max-height: 50em'>
+      {{blog.content}}
+    </view>
+    <view class="grid col-{{blog.attachments.length}} grid-square flex-sub padding-lr" >
+      <view class="bg-img "  style="background-image:url('{{url}}/{{picItem.url}}');"
+             wx:for="{{blog.attachments}}" wx:for-item='picItem' wx:for-index="picIdx" wx:key
+              bindtap='previewImage' data-picIdx='{{picIdx}}'>
+      </view>
+    </view>
+    <view class='text-gray text-sm text-right padding'>
+      <!-- <text class="icon-favorfill" bindtap='favor' data-id='{{blog.id}}'></text> {{blog.follows}}
+      <text class="icon-appreciatefill" bindtap='star' data-id='{{blog.id}}'></text> {{blog.stars}} -->
+      <text class="icon-messagefill" bindtap="showModal" bindtap='comment' data-commentid='{{blog.id}}' 
+                  data-citemIdx='{{citemIdx}}' data-type='blog'></text> {{comments.length}}
+    </view>
+
+    <view class="cu-list menu menu-avatar comment solids-top">
+      <view class="cu-item" wx:for="{{comments}}" wx:for-item='commentItem' wx:for-index='citemIdx' wx:key>
+        <view class="cu-avatar round" style="background-image:url('{{commentItem.commenter.avatarUrl}}');"></view>
+        <view class='content'>
+          <view class='text-grey'>{{commentItem.commenter.nickName}}</view>
+          <view class='text-black text-content text-df' style='max-height: 50em' bindtap='comment' data-commentid='{{commentItem.id}}' 
+                  data-citemIdx='{{citemIdx}}' data-type='comment'>
+            {{commentItem.text}}
+          </view>
+          <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{commentItem.commentChilds.length > 0}}"  >
+            <view class="flex {{index!=0?'margin-top-sm':'' }}"  wx:for="{{commentItem.commentChilds}}" wx:for-item='childItem' wx:key>
+              <view>
+              {{userInfo.nickName== childItem.commenter.nickName&&userInfo.avatarUrl == childItem.commenter.avatarUrl ? '我' : childItem.commenter.nickName}}：</view>
+              <view class='flex-sub' style='max-height: 50em'>{{childItem.text}}</view>
+            </view>
+          </view>
+          <view class='margin-top-sm flex justify-between'>
+            <view class='text-gray text-df'>{{commentItem.commentTime}}</view>
+            <view>
+              <text class="icon-appreciate{{!commentItem.isLike ? 'fill' :''}} text-{{!commentItem.isLike ? 'red':'gray'}}"></text>
+              <text class="icon-messagefill text-gray margin-left-sm" bindtap='comment' data-commentid='{{commentItem.id}}' 
+                  data-citemIdx='{{citemIdx}}' data-type='comment'>{{commentItem.commentChilds.length}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="bottomlayer"> </view>
+<view class="cu-bar foot input">
+  <view class="cu-avatar round" style="background-image:url({{userInfo.avatarUrl}});"></view>
+    <view class='action'>
+      <text class='icon-roundaddfill text-grey'></text>
+    </view>
+    <input class='solid-bottom' maxlength="300" adjust-position="ture" value='{{iptVal}}'
+    focus='{{ipt.focus}}' bindblur='blur' data-ipt='{{ipt}}' bindconfirm='sendComment' bindinput='bindKeyInput' cursor-spacing="10"></input>
+  <view class='action'>
+    <text class='icon-emojifill text-grey'></text>
+  </view>
+  <button class='cu-btn bg-green shadow' bindtap='sendComment' data-webid="{{userInfo.webId}}">评论</button>
+</view>
+
+
+

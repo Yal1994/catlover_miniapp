@@ -1,0 +1,32 @@
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-gradual-pink" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+      <text class='icon-back'></text>
+      聊天
+    </navigator>
+  </view>
+</view>
+
+<view class="cu-chat" id="mainfrm">
+  <view class="cu-item {{userInfo.webId== msg.senderId ? 'self' : ''}}" wx:for="{{msgList}}" wx:for-item="msg" wx:key>
+  <view class="cu-avatar radius" wx:if="{{userInfo.webId != msg.senderId}}" style="background-image:url({{userInfo.webId== msg.senderId   ? userInfo.avatarUrl : room.reciver.avatarUrl}});"></view>
+    <view class="main">
+      <view class="content {{userInfo.webId == msg.senderId ? 'bg-green' : ''}} shadow">
+        <text style="word-break: break-all;white-space:pre-wrap">{{msg.content}}</text>
+      </view>
+    </view>
+    <view class="cu-avatar radius" wx:if="{{userInfo.webId == msg.senderId}}" style="background-image:url({{userInfo.webId== msg.senderId   ? userInfo.avatarUrl : room.reciver.avatarUrl}});"></view>
+    <view class='date'>{{msg.sendTime}}</view>
+  </view>
+</view>
+
+<view class="cu-bar foot input">
+  <!-- <view class='action'>
+    <text class='icon-sound text-grey'></text>
+  </view> -->
+  <input class='solid-bottom' focus="{{false}}" bindinput='bindInput' value='{{iptVal}}' maxlength="300" cursor-spacing="10"></input>
+  <!-- <view class='action'>
+    <text class='icon-emojifill text-grey'></text>
+  </view> -->
+  <button class='cu-btn bg-green shadow' bindtap='sendMessage'>发送</button>
+</view>

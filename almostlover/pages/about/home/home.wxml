@@ -1,0 +1,57 @@
+<view class='UCenter-bg' style="background-image:url('{{bgImg}}');" bindtap='uploadBgImg'>
+  <image src='{{userInfo.avatarUrl}}' class='png round' mode='widthFix'></image>
+    <view class='text-xl'>{{userInfo.nickName}}   
+  </view>
+  
+  <image src='/images/wave.gif' mode='scaleToFill' class='gif-wave'></image>
+</view>
+<view class='padding flex text-center text-grey bg-white shadow-warp'>
+  <view class='flex flex-sub flex-direction solid-right' bindtap='blogList'>
+    <view class="text-xxl text-orange">{{userInfo.blogs}}</view>
+    <view class="margin-top-sm">
+      <text class='icon-choiceness'></text> 猫文</view>
+  </view>
+  <navigator class='flex flex-sub flex-direction solid-right' url="/pages/user/detail/star/star?targetId={{userInfo.webId}}&isStar=true&nickName={{userInfo.nickName}}">
+    <view class="text-xxl text-blue">{{userInfo.stars}}</view>
+    <view class="margin-top-sm">
+      <text class='icon-friendfamous'></text> 关注</view>
+  </navigator>
+  <navigator class='flex flex-sub flex-direction' url="/pages/user/detail/star/star?targetId={{userInfo.webId}}&isStar=false&nickName={{userInfo.nickName}}">
+    <view class="text-xxl text-green">{{userInfo.follows}}</view>
+    <view class="margin-top-sm">
+      <text class='icon-friend'></text> 粉丝</view>
+  </navigator>
+</view>
+<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+  
+  <view class="cu-item arrow">
+    <view class='content' bindtap='showModal' data-target="msgModal" hover-class='none'>
+      <text class='text-grey'>关于吸猫场所</text>
+    </view>
+  </view>
+  <view class="cu-form-group margin-top">  
+    <view class='title text-grey'>
+    <text>接受私聊:{{userInfo.openChat=='1'?"已开启":"已关闭"}}</text></view>
+    <switch bindchange='openChat' checked="{{userInfo.openChat=='1'}}" ></switch>
+  </view>  
+</view>
+
+<view class='cu-tabbar-height'></view>
+
+
+<view class="cu-modal {{modalName=='msgModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class='content text-grey'>我们的口号是:?</view>
+      <view class='action' bindtap='hideModal'>
+        <text class='icon-close text-red'></text>
+      </view>
+    </view>
+    <view class='padding-xl'>
+     <text class='text-red light icon-emoji text-bold'> 足不出户 科学吸猫 </text>
+    </view>
+    <view class="cu-bar bg-green" bindtap='hideModal'>
+      <view class='action margin-0 flex-sub  solid-left' >好的</view>
+    </view>
+  </view>
+</view>

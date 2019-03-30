@@ -1,0 +1,92 @@
+<view class='cu-custom'>
+  <view class="cu-bar fixed bg-shadeTop" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+
+    </navigator>
+    <view class='content' style='top:{{StatusBar}}px;'>吸猫场所</view>
+  </view>
+</view>
+<swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+  <swiper-item wx:for="{{4}}" wx:key>
+    <image src="{{url}}/img/bgim-{{index}}.jpg" bindtap="showModal" data-target="Image" data-url="{{url}}/img/bgim-{{index}}.jpg" mode='aspectFill'></image>
+  </swiper-item>
+</swiper>
+
+
+
+<view class="cu-bar bg-white solid-bottom {{isCard?'margin-top':''}}">
+  <view class='action'>
+    <text class='icon-titles text-orange '></text> 最新猫片
+    <button class="cu-btn lines-green round sm fr margin-left" 
+              bindtap="refresh" >刷新</button>
+  </view>
+  <view class='action'>
+    
+    <switch class='sm' checked='{{isCard}}' bindchange='isCard'></switch>
+  </view>
+</view>
+<view class="cu-card dynamic {{isCard?'no-card':''}}">
+  <!-- 服务器取猫片 -->
+  <view wx:for="{{blogsList}}" wx:key class="cu-item shadow" >
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item" >        
+        <view class="cu-avatar round lg" bindtap='userHome' data-webId='{{item.publisher.webId}}' style="background-image:url('{{item.publisher.avatarUrl}}');"></view>
+        <view class='content flex-sub' bindtap='detail' data-idx='{{index}}'>
+          <view class='action' wx:if="{{userInfo.webId != item.publisher.webId}}" >
+            <button class="cu-btn lines-yellow round sm fr" 
+              bindtap='userHome' data-webId='{{item.publisher.webId}}'>关注</button>
+          </view> 
+          <view>{{item.publisher.nickName}}</view>
+          <view class='text-gray text-sm flex justify-between' bindtap='detail' data-idx='{{index}}'>
+            {{item.publishTime}}
+          </view>
+                  
+        </view>
+      </view>
+    </view>
+    <view class='text-content text-wrap' bindtap='detail' data-idx='{{index}}'>
+      {{item.content}}
+    </view>
+    <view class="grid col-{{item.attachments.length > 3 ? 3 : item.attachments.length}} {{isCard ? 'grid-square':'co1-1'}}  flex-sub padding-lr" >
+      <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{url}}{{picItem.url}});"
+       wx:for="{{isCard?item.attachments:[item.attachments[0]]}}" wx:for-item='picItem'  wx:for-index='picIdx' wx:key 
+       bindtap='previewImage' data-blogIdx='{{index}}' data-picIdx='{{picIdx}}' wx:if="{{item.attachments[0].type == '1' }}" >
+      </view>
+
+      <video wx:if="{{item.attachments[0].type == '2' }}" class="padding-xs bg-img"  src='{{url}}{{item.attachments[0].url}}'>        
+      </video>
+      
+    </view>
+    <view class='text-gray text-sm text-right padding'>
+      <text class="icon-favorfill" bindtap='favor' data-id='{{item.id}}' data-idx='{{index}}'></text> {{item.views}}
+      <text class="icon-appreciatefill {{item.isStar ? 'text-red' : ''}}"  
+        bindtap='star' data-id='{{item.id}}' data-idx='{{index}}'></text> {{item.stars}}
+      <text class="icon-messagefill" bindtap='detail' data-idx='{{index}}'></text> {{item.comments}}
+    </view>
+
+
+  </view>
+</view>
+
+
+<view class="padding flex flex-direction">
+  <button plain='true' bindtap='loadMore' data-curpage='{{curPage}}' class='cu-btn bg-blue lg' hover-class="cu-load bg-grey loading">点击加载更多...</button>
+</view>
+<view class="bottomlayer"> </view>
+
+
+
+<view class="cu-modal {{modalName=='Image'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="bg-img" style="background-image: url('{{detailPicUrl}}');height:200px;">
+      <view class="cu-bar justify-end text-white">
+        <view class='action' bindtap='hideModal'>
+          <text class='icon-close '></text>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white">
+      <view class='action margin-0 flex-sub  solid-left' bindtap='hideModal'>吸完了</view>
+    </view>
+  </view>
+</view>

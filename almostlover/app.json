@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/main/home/home",
+    "pages/logs/logs",
+    "pages/main/detail/detail",
+    "pages/publish/publish",
+    "pages/about/home/home",
+    "pages/user/user",
+    "pages/user/detail/blog/blog",
+    "pages/user/detail/star/star",
+    "pages/message/home/home",
+    "pages/message/chat/chat",   
+    "custom-tab-bar/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#39b54a",
+    "navigationBarTitleText": "Almost lover",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {},
+  "tabBar": {
+    "custom": true,
+    "color": "#aaa",
+    "selectedColor": "#39b54a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/home/home",
+        "text": "首页",
+        "iconPath": "images/heart.png",
+        "selectedIconPath": "images/heart_focus.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布",
+        "iconPath": "images/star.png",
+        "selectedIconPath": "images/star_focus.png"
+      },
+      {
+        "pagePath": "pages/message/home/home",
+        "text": "消息",
+        "iconPath": "images/star.png",
+        "selectedIconPath": "images/star_focus.png"
+      },
+      {
+        "pagePath": "pages/about/home/home",
+        "text": "我",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me_focus.png"
+      }
+    ]
+  }
+}
